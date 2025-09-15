@@ -1,0 +1,19 @@
+name = "photo-blog-site"
+main = "src/index.ts"
+compatibility_date = "2023-12-01"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+JWT_SECRET = "your-jwt-secret-here"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "photo-blog-db"
+database_id = "8799537f-8c56-4f46-8251-637b099af9e7"
+
+[[r2_buckets]]
+binding = "BUCKET"
+bucket_name = "photo-blog-bucket"
+
+[build]
+command = "npm run build"
