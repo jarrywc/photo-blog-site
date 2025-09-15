@@ -165,7 +165,10 @@ export function layout(title: string, content: string, user?: any): string {
                 <li><a href="/feed">Feed</a></li>
                 ${user ? `
                     <li><a href="/upload">Upload</a></li>
-                    ${user.roles?.some((r: any) => r.name === 'admin') ? '<li><a href="/admin">Admin</a></li>' : ''}
+                    ${user.roles?.some((r: any) => r.name === 'admin') ? `
+                        <li><a href="/admin">Admin</a></li>
+                        <li><a href="/admin/codes">Codes</a></li>
+                    ` : ''}
                     <li><a href="/logout">Logout (${user.name})</a></li>
                 ` : `
                     <li><a href="/login">Login</a></li>

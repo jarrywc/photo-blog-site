@@ -7,17 +7,23 @@
     "dev": "wrangler dev src/index.ts",
     "deploy": "wrangler deploy --minify src/index.ts",
     "build": "tsc",
-    "db:generate": "wrangler d1 migrations create photo-blog-db",
+    "db:generate": "drizzle-kit generate:sqlite",
+    "db:push": "drizzle-kit push:sqlite",
+    "db:studio": "drizzle-kit studio",
+    "db:migrate": "wrangler d1 migrations create photo-blog-db",
     "db:apply": "wrangler d1 migrations apply photo-blog-db --local",
     "db:apply:prod": "wrangler d1 migrations apply photo-blog-db"
   },
   "dependencies": {
-    "hono": "^4.9.7",
     "@noble/hashes": "^1.3.3",
-    "jose": "^5.2.0"
+    "drizzle-orm": "^0.44.5",
+    "hono": "^4.9.7",
+    "jose": "^5.2.0",
+    "zod": "^4.1.8"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20231218.0",
+    "drizzle-kit": "^0.31.4",
     "typescript": "^5.3.3",
     "wrangler": "^4.37.0"
   }

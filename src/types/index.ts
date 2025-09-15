@@ -59,6 +59,17 @@ export interface Comment {
   user_name?: string;
 }
 
+export interface Code {
+  code: string;
+  start_datetime: string;
+  end_datetime: string;
+  type: string;
+  target: string;
+  created_at: string;
+  used_at?: string;
+  used_by_user_id?: number;
+}
+
 export interface Env {
   Bindings: {
     DB: D1Database;
@@ -67,5 +78,6 @@ export interface Env {
   };
   Variables: {
     user: any;
+    validatedData: any;
   };
 }

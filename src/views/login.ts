@@ -171,6 +171,13 @@ export function registerPage(error?: string, name?: string, email?: string): str
                         </div>
                     </div>
                 </div>
+                <div class="form-group">
+                    <label for="code">Signup Code</label>
+                    <input type="text" id="code" name="code" value=""
+                           required aria-describedby="code-error"
+                           placeholder="Enter your signup code">
+                    <div id="code-error" class="field-error" style="display: none;"></div>
+                </div>
                 <button type="submit" class="btn" style="width: 100%;" id="register-btn">
                     <span id="register-text">Create Account</span>
                     <span id="register-spinner" style="display: none;">Creating account...</span>
@@ -204,6 +211,7 @@ export function registerPage(error?: string, name?: string, email?: string): str
             const nameInput = document.getElementById('name');
             const emailInput = document.getElementById('email');
             const passwordInput = document.getElementById('password');
+            const codeInput = document.getElementById('code');
             const registerBtn = document.getElementById('register-btn');
             const registerText = document.getElementById('register-text');
             const registerSpinner = document.getElementById('register-spinner');
@@ -234,6 +242,7 @@ export function registerPage(error?: string, name?: string, email?: string): str
                 clearFieldError('password');
                 updatePasswordStrength();
             });
+            codeInput.addEventListener('input', () => clearFieldError('code'));
 
             function updatePasswordStrength() {
                 const password = passwordInput.value;
@@ -279,6 +288,7 @@ export function registerPage(error?: string, name?: string, email?: string): str
                 clearFieldError('name');
                 clearFieldError('email');
                 clearFieldError('password');
+                clearFieldError('code');
 
                 // Validate name
                 if (!nameInput.value.trim()) {
@@ -304,6 +314,12 @@ export function registerPage(error?: string, name?: string, email?: string): str
                     hasErrors = true;
                 } else if (passwordInput.value.length < 6) {
                     showFieldError('password', 'Password must be at least 6 characters');
+                    hasErrors = true;
+                }
+
+                // Validate code
+                if (!codeInput.value.trim()) {
+                    showFieldError('code', 'Signup code is required');
                     hasErrors = true;
                 }
 

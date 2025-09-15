@@ -1,4 +1,4 @@
-import { User, Role, Photo, UserRole, Post, Comment, PostPhoto } from '../types';
+import { User, Role, Photo, UserRole, Post, Comment, PostPhoto, Code } from '../types';
 
 export class DatabaseService {
   constructor(private db: D1Database) {}
@@ -209,5 +209,32 @@ export class DatabaseService {
       ORDER BY p.created_at DESC
     `).all();
     return result.results as unknown as Photo[];
+  }
+
+  // Code methods
+  async createCode(code: string, startDatetime: string, endDatetime: string, type: string, target: string): Promise<Code> {
+    const result = await this.db.prepare(
+      'INSERT INTO codes (code, start_datetime, end_datetime, type, target) VALUES (?, ?, ?, ?, ?) RETURNING *'
+    ).bind(code, startDatetime, endDatetime, type, target).first<Code>();
+
+    if (!result) throw new Error('Failed to create code');
+    return result;
+  }
+
+  async getCodeByCode(code: string): Promise<Code | null> {
+    return await this.db.prepare(
+      'SELECT * FROM codes WHERE code = ?'
+    ).bind(code).first<Code>();
+  }
+
+  async useCode(code: string, userId: number): Promise<void> {
+    await this.db.prepare(
+      'UPDATE codes SET used_at = CURRENT_TIMESTAMP, used_by_user_id = ? WHERE code = ?'
+    ).bind(userId, code).run();
+  }
+
+  async getAllCodes(): Promise<Code[]> {
+    const result = await this.db.prepare('SELECT * FROM codes ORDER BY created_at DESC').all<Code>();
+    return result.results;
   }
 }
